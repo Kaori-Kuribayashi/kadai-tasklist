@@ -1,26 +1,26 @@
-class MessagesController < ApplicationController
+class TasksController < ApplicationController
   #タスク一覧
   def index
-    @messages = Message.all
+    @tasks = Task.all
   end
   
   #詳細ページ
   def show
-    @message = Message.find(params[:id])
+    @task = Task.find(params[:id])
   end
   
   #作成ページ
   def new
-    @message = Message.new
+    @task = Task.new
   end
   
   #newのページから送られてきたフォームの処理
   def create
-    @message = Message.new(message_params)
+    @task = Task.new(task_params)
     
-    if @message.save
+    if @task.save
       flash[:success] = 'タスクが正常に追加されました'
-      redirect_to @message
+      redirect_to @task
     else
       flash.now[:danger] = 'タスクが追加されませんでした'
       render :new
@@ -29,16 +29,16 @@ class MessagesController < ApplicationController
   
   #編集ページ
   def edit
-    @message = Message.find(params[:id])
+    @task = Task.find(params[:id])
   end
   
   #editのページから送られてきたフォームの処理
   def update
-    @message = Message.find(params[:id])
+    @task = Task.find(params[:id])
     
-    if @message.update(message_params)
+    if @task.update(task_params)
       flash[:success] = 'タスクは正常に更新されました'
-      redirect_to @message
+      redirect_to @task
     else
       flash.now[:danger] = 'タスクは更新されませんでした'
       render :edit
@@ -47,18 +47,17 @@ class MessagesController < ApplicationController
   
   #削除
   def destroy
-    @message = Message.find(params[:id])
-    @message.destroy
+    @task = Task.find(params[:id])
+    @task.destroy
     
     flash[:success] = 'タスクは正常に削除されました'
-    redirect_to messages_url
+    redirect_to tasks_url
   end
   
   private
   
   #Strong Parameter
-  def message_params
-    params.require(:message).permit(:content)
+  def task_params
+    params.require(:task).permit(:content)
   end
-
 end
