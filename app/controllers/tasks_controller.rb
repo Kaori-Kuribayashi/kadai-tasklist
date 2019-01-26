@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in
-  before_action :correct_user, only: [:destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
   
   #タスク一覧
   def index
@@ -44,7 +44,7 @@ class TasksController < ApplicationController
       redirect_to @task
     else
       flash.now[:danger] = 'タスクは更新されませんでした'
-      render :edit
+      redirect_back(fallback_location: root_path)
     end
   end
   
